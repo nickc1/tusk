@@ -11,7 +11,7 @@ To run a python script that sends a slack message on error:
 tusk myscript.py --slack
 ```
 
-Similary to run a python notebook:
+We also build on the excellent [papermill](https://papermill.readthedocs.io/en/latest/) library, so similary to run a python notebook:
 
 ```bash
 tusk my-notebook.ipynb --slack

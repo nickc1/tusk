@@ -61,7 +61,7 @@ class Slack:
 
         self.add_markdown_block(msg)
 
-    def add_error_block(self, path, start_time, end_time):
+    def add_error_block(self, error, path, start_time, end_time):
         elapsed = end_time - start_time
 
         msg = f"""
@@ -69,6 +69,7 @@ class Slack:
         *Start Time*: {start_time}
         *End time*: {end_time}
         *Run Time*: {elapsed}
+        *Error*: {error}
         """
 
         self.add_markdown_block(msg)

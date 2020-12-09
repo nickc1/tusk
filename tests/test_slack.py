@@ -16,9 +16,10 @@ def test_slack():
     end_time = start_time + datetime.timedelta(minutes=3, seconds=22)
 
     S = Slack()
-    S.add_error_block(path, start_time, end_time)
+    S.add_success_block(path, start_time, end_time)
     S.make_post()
 
+    error = "TEST ERROR"
     S = Slack()
-    S.add_success_block(path, start_time, end_time)
+    S.add_error_block(path, error, start_time, end_time)
     S.make_post()

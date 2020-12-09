@@ -2,31 +2,36 @@ import runpy
 from datetime import datetime
 import traceback
 import typer
-from .slack import Slack
+from .runner import Runner
 
 app = typer.Typer()
 
 
-@app.command()
-def something(path: str):
+@app.command(context_settings={"allow_extra_args": True})
+def run(ctx: typer.Context, path: str, path_out: str = None):
 
-    start_time = datetime.now()
-    typer.echo(f"TUSK: Starting at {start_time} run of: \n{path}\n")
+    for extra_arg in ctx.args:
+        typer.echo(f"Got extra arg: {extra_arg}")
 
-    try:
-        runpy.run_path(path)
-        print("It ran")
+    R = Runner(path, path_out=path_out)
+    R.run()
 
-    except Exception:
+    # start_time = datetime.now()
+    # typer.echo(f"TUSK: Starting at {start_time} run of: \n{path}\n")
 
-        error = traceback.format_exc()
-        typer.echo(f"ERROR IN: \n {error}")
+    # try:
+    #     runpy.run_path(path)
 
-        # send message
-        end_time = datetime.now()
-        S = Slack()
-        S.add_error_block(path, start_time, end_time)
-        S.make_post()
+    # except Exception:
 
-    end = datetime.now()
-    typer.echo(f"TUSK: Finished at {end}")
+    #     error = traceback.format_exc()
+    #     typer.echo(f"ERROR IN: \n {error}")
+
+    #     # send message
+    #     end_time = datetime.now()
+    #     S = Slack()
+    #     S.add_error_block(path, start_time, end_time)
+    #     S.make_post()
+
+    # end = datetime.now()
+    # typer.echo(f"TUSK: Finished at {end}")
