@@ -1,37 +1,48 @@
-import runpy
-from datetime import datetime
-import traceback
-import typer
+import click
 from .runner import Runner
 
-app = typer.Typer()
+@click.command()
+@click.argument("path")
+@click.option("--path_out", help="Where to save output.")
+@click.option(
+    "--parameters",
+    "-p",
+    nargs=2,
+    multiple=True,
+    help="Parameters to pass to the parameters cell.",
+)
+def tusk(path, path_out, parameters):
+    """Simple program that greets NAME for a total of COUNT times."""
 
-
-@app.command(context_settings={"allow_extra_args": True})
-def run(ctx: typer.Context, path: str, path_out: str = None):
-
-    for extra_arg in ctx.args:
-        typer.echo(f"Got extra arg: {extra_arg}")
-
-    R = Runner(path, path_out=path_out)
+    click.echo(f"path: {path}")
+    click.echo(f"path_out: {path_out}")
+    click.echo(f"parameters: {parameters}")
+    if not len(parameters):
+        parameters = None
+    R = Runner(path, path_out=path_out, parameters=parameters)
     R.run()
 
-    # start_time = datetime.now()
-    # typer.echo(f"TUSK: Starting at {start_time} run of: \n{path}\n")
 
-    # try:
-    #     runpy.run_path(path)
+# from typing import List, Optional, Tuple
+# import typer
+# 
 
-    # except Exception:
+# app = typer.Typer()
 
-    #     error = traceback.format_exc()
-    #     typer.echo(f"ERROR IN: \n {error}")
 
-    #     # send message
-    #     end_time = datetime.now()
-    #     S = Slack()
-    #     S.add_error_block(path, start_time, end_time)
-    #     S.make_post()
+# @app.command()
+# def run(
+#     ctx: typer.Context,
+#     path: str,
+#     path_out: str = None,
+#     user: Optional[List[str]] = typer.Argument(None, nargs=2),
+# ):
 
-    # end = datetime.now()
-    # typer.echo(f"TUSK: Finished at {end}")
+#     if not user:
+#         typer.echo("No provided users")
+#         raise typer.Abort()
+#     for u in user:
+#         typer.echo(f"Processing user: {u}")
+
+#     R = Runner(path, path_out=path_out)
+#     R.run()

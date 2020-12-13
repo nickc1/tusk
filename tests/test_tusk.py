@@ -10,7 +10,6 @@ def test_version():
 
 def test_runner_pass():
     f = os.path.join(os.path.dirname(__file__), "test_tusk", "script_pass.py")
-    # f = "test_scripts/script_pass.py"
     R = Runner(f)
     R.run()
 
