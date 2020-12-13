@@ -1,6 +1,7 @@
 import click
 from .runner import Runner
 
+
 @click.command()
 @click.argument("path")
 @click.option("--path_out", help="Where to save output.")
@@ -25,7 +26,7 @@ def tusk(path, path_out, parameters):
 
 # from typing import List, Optional, Tuple
 # import typer
-# 
+#
 
 # app = typer.Typer()
 
